@@ -1,0 +1,104 @@
+TimeEstimate
+
+// 100 5
+// Input
+// weight distance
+// PKG1 50 30 OFR001
+// PKG2 75 125 OFFR0008
+// PKG3 175 100 OFFR003
+// PKG4 110 60 OFFR002
+// PKG5 155 95 NA
+// 2 70 200
+
+// output - only time estimation
+// PKG1 0  3.98 ------ v4
+// PKG2 0  1.78  
+// PKG3 0  1.42  
+// PKG4 105 0.85 
+// PKG5 0  4.19   -------4  v1-v3
+
+// Algorithm
+
+// find groups
+// calculate time 
+// remove first two items
+// do comparison - 2 times - lowest -  add 
+
+// 1   
+// 175
+// 100/70 = 1.42 ------v1
+
+// 2  
+// 155
+// 95/70 = 1.35  ------v3
+
+// twice previous time  3.56,  2.84 and choose lowest
+// 1.35 + 2.84 = 4.19
+
+// 3 
+// 110 75
+// 125 /70 = 1.78   ----v2
+// 60/70 = .85   -----v2
+
+// 4 
+// 50  
+// 30/70 = .42   ----------v4
+
+// twice previous time  3.56,  2.84 + 2 *1.35 = 2.84 + 2.7 = 5.54 and choose lowest
+// 3.56 + .42 = 3.98
+
+
+[ 1.43, 1.36, 1.79, 0.43 ]
+
+[
+  [
+    {
+      weight: 175,     
+      distance: 100,   
+      time: '1.43',    
+      doubleTime: 2.86,
+      maxTime: 1.43    
+    }
+  ],
+  [
+    {
+      weight: 155,     
+      distance: 95,
+      time: '1.36',
+      doubleTime: 2.72,
+      maxTime: 1.36
+    }
+  ],
+  [
+    {
+      weight: 110,
+      distance: 60,
+      time: '0.86',
+      doubleTime: 1.72,
+      maxTime: 1.79
+    },
+    {
+      weight: 75,
+      distance: 125,
+      time: '1.79',
+      doubleTime: 3.58,
+      maxTime: 1.79
+    }
+  ],
+  [
+    {
+      weight: 50,
+      distance: 30,
+      time: '0.43',
+      doubleTime: 0.86,
+      maxTime: 0.43
+    }
+  ]
+]
+
+
+3rd vehicle 
+
+  this.update.push(2*array[index]);
+                    this.minTime = Math.min(...this.update);
+                    array.shift();

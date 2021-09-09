@@ -1,0 +1,28 @@
+Initial Impressions: Code is not up-to the basic standards, but seems good programatic logics are included.
+Naming conventions are not good. - fixed
+File names are not decent. Ex; Problem1.ts could be something like CostEstimate.ts - fixed
+Class names should be improve. (AppComponent to CostEstimate something like) - fixed
+Function names are not well readable. (returnCost() to getCost()  and returnPrice() to getEligibleDiscount()  Function names should be readable based on the what it is doing) - fixed
+
+Variable names are not readable. Some bad naming variables: maxTimeEachArr, final, arr, obj
+ Not enough Readme text to understand about the project. - fixed
+ No unit testing has done.
+Condition statements are not readable. Example in Problem1.ts returnPrice() function.  - fixed
+
+In Problem2.ts, missing readability and maintainability. Function implementations are bit larger and not readable. Splitting into smaller functions would be great.
+In finalDiscountedCost() function, two tasks are happening, cost calculation and logging. Avoid doing multiple tasks in a single function.  - There are three task happening in a single function because it includes final implementations. 
+
+Problem2.ts have lots comments and larger functions say traverseDelivery(), findElementsUnderLimit(). Please do necessary refactoring as suggested. - fixed
+In Problem2.ts, some empty new lines exists within the code. Please remove them and fix code indentation issues. - fixed
+Suggestions
+=========
+Remove empty code lines and empty functions.
+Could be improve if/else block by splitting them into smaller boolean functions.
+Avoid unnecessary comments.
+Splitting larger functions into small chunks for readability and maintainability.
+Make variable names, function names readable according to the context.
+Avoid console.log statements in the modules. Have a simple logger module
+
+================================================================================
+tsc TimeEstimate.ts
+node TimeEstimate.js
