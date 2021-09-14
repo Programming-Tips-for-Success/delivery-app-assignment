@@ -36,6 +36,17 @@ Open the project and run  these two commands
 `tsc filename.ts`
 `node filename.js`
 
+tsc CostEstimate/CostEstimate.ts
+node CostEstimate/CostEstimate.js
+tsc CostEstimate/index.ts
+
+tsc TimeEstimate/TimeEstimate.ts
+node TimeEstimate/TimeEstimate.js
+tsc TimeEstimate/index.ts
+## Tu run unit test
+update package.json file scripts -> jasmine CostEstimate/CostEstimate.spec.js
+update package.json file scripts -> jasmine TimeEstimate/TimeEstimate.spec.js
+
 ## Need help?
 
 

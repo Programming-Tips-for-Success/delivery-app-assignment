@@ -24,5 +24,17 @@ Make variable names, function names readable according to the context.
 Avoid console.log statements in the modules. Have a simple logger module
 
 ================================================================================
-tsc TimeEstimate.ts
-node TimeEstimate.js
+
+Separate the code in TimeEstimate.ts, remove lines 99-116 and move them to index.ts.  May be have a folder called TimeEstimate and have TimeEstimate.ts and index.ts files in that. Same for CostEstimate, remove lines 46 and 47 and keep them in index.ts.
+
+In getEligibleDiscount  , why do we need 3 if statement instead of if/else block ? Because those condition statements seems if/else block. Also try to figure out best way to write those condition statements and assign some meaningful variables to those integer constants (distance and weight).
+
+finalDiscountedCost function still have console.log statement. Please avoid it and have a simple logger module instead.
+const checkAvailability = this.getEligibleDiscount(weight, distance);  const costWithOutDiscount = this.getCost(baseCost, weight, distance); these two statements in the CostEstimate are bit confusing by their variable names and function names. Say, getEligibleDiscount is returning eligible discount percent, variable name checkAvailability is not best naming to understand.
+
+README should have to improve. Add more info about project, setup process and execution.
+Still has no unit testing.
+Suggestions
+==========
+Try to avoid variable names ending with ___Array like maxElementsArray, packagesArray . You don't need to mention it's type in the variable name. Best examples was selectedPackages variable.
+Remove empty constructor in CostEstimate

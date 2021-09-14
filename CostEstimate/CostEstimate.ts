@@ -2,18 +2,17 @@
 export class CostEstimate {
 
     baseCost = 100;
-    constructor() {
-    }
+ 
 
-    getEligibleDiscount(weight: number, distance: number) {
+    getEligibleDiscount(pkg_weight_in_kg: number, distance_in_km: number) {
 
-        if (distance >= 50 && distance <= 150 && weight >= 100 && weight <= 250) {
+        if (distance_in_km >= 50 && distance_in_km <= 150 && pkg_weight_in_kg >= 100 && pkg_weight_in_kg <= 250) {
             return   7;
         } 
-        if (distance >= 50 && distance <= 250 && weight >= 10 && weight <= 150) {
+        if (distance_in_km >= 50 && distance_in_km <= 250 && pkg_weight_in_kg >= 10 && pkg_weight_in_kg <= 150) {
             return  5;
         } 
-         if (distance <= 200 && weight >= 70 && weight <= 200) {
+         if (distance_in_km <= 200 && pkg_weight_in_kg >= 70 && pkg_weight_in_kg <= 200) {
             return   10; 
         } 
         return 0;
@@ -31,17 +30,13 @@ export class CostEstimate {
     }
 
     finalDiscountedCost(weight: number, distance: number, baseCost: number, packageName: string) {
-        const checkAvailability = this.getEligibleDiscount(weight, distance);
+        const eligibleDiscountPercent = this.getEligibleDiscount(weight, distance);
         const costWithOutDiscount = this.getCost(baseCost, weight, distance);
-        const {cost: finalDiscountedCost,  discount} = this.finalCost(checkAvailability, costWithOutDiscount);
-        console.log(finalDiscountedCost, packageName, discount);
+        const {cost: finalDiscountedCost,  discount} = this.finalCost(eligibleDiscountPercent, costWithOutDiscount);
+        return {finalDiscountedCost, discount, packageName};
     }
 
 }
 
-// weight distance
-// PKG1 5 5 OFR001
-// PKG2 15 5 OFR002
-// PKG3 10 100 OFR003
-let obj = new CostEstimate();
-obj.finalDiscountedCost(5, 5, 100, "PKG1");
+
+

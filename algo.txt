@@ -32,8 +32,8 @@ TimeEstimate
 // 155
 // 95/70 = 1.35  ------v3
 
-// twice previous time  3.56,  2.84 and choose lowest
-// 1.35 + 2.84 = 4.19
+
+// twice previous time min( 3.56,  2.84) + 2 *1.35 = 2.84 + 2.7 = 5.54 and choose lowest
 
 // 3 
 // 110 75
@@ -44,7 +44,7 @@ TimeEstimate
 // 50  
 // 30/70 = .42   ----------v4
 
-// twice previous time  3.56,  2.84 + 2 *1.35 = 2.84 + 2.7 = 5.54 and choose lowest
+
 // 3.56 + .42 = 3.98
 
 
@@ -102,3 +102,5 @@ TimeEstimate
   this.update.push(2*array[index]);
                     this.minTime = Math.min(...this.update);
                     array.shift();
+
+                    

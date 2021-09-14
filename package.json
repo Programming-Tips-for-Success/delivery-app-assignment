@@ -1,0 +1,26 @@
+{
+  "name": "delivery-app",
+  "version": "1.0.0",
+  "description": "Here we are solving two problems \r Delivery Cost Estimation with Offers\r Delivery Time Estimation",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine CostEstimate/CostEstimate.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunny7899/delivery-app.git"
+  },
+  "keywords": [],
+  "dependencies": {
+    "jasmine": "^3.9.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sunny7899/delivery-app/issues"
+  },
+  "homepage": "https://github.com/sunny7899/delivery-app#readme",
+  "devDependencies": {
+    "@types/node": "^16.9.1"
+  }
+}
