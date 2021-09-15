@@ -4,7 +4,8 @@
   "description": "Here we are solving two problems \r Delivery Cost Estimation with Offers\r Delivery Time Estimation",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine CostEstimate/CostEstimate.spec.js"
+    "test": "jasmine TimeEstimate/TimeEstimate.spec.js",
+    "test2": "jasmine CostEstimate/CostEstimate.spec.js"
   },
   "repository": {
     "type": "git",

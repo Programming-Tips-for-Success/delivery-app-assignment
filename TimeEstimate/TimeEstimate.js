@@ -1,10 +1,13 @@
 "use strict";
 exports.__esModule = true;
 exports.TimeEstimate = void 0;
+var CostEstimate_1 = require("../CostEstimate/CostEstimate");
 var TimeEstimate = /** @class */ (function () {
     function TimeEstimate() {
         this.packagesDetails = [];
         this.vehiclesTime = {};
+        this.updatedPackagesDetailsWithTime = [];
+        this.costEstimate = new CostEstimate_1.CostEstimate();
     }
     TimeEstimate.prototype.sortPackages = function (packagesInfo) {
         packagesInfo.sort(function (a, b) {
@@ -68,7 +71,6 @@ var TimeEstimate = /** @class */ (function () {
         this.removeItems(vehicleAvailable, packagesMaximumTime, count, updatesVehiclesDetail);
     };
     TimeEstimate.prototype.removeItems = function (vehicleCount, packagesMaximumTime, count, updatesVehiclesDetail) {
-        var _this = this;
         var itemIndex;
         for (var index = 0; index < vehicleCount; index++) {
             for (var j = 0; j < packagesMaximumTime.length; j++) {
@@ -76,23 +78,33 @@ var TimeEstimate = /** @class */ (function () {
                     itemIndex = j;
                     if (this.minimumTime) {
                         var vehicleTime = 0;
-                        vehicleTime = this.minimumTime + (parseFloat(updatesVehiclesDetail[j][0].maxTime) * 2);
-                        console.log(vehicleTime, this.vehiclesTime, this.minimumTime, 'sase2');
+                        vehicleTime = this.minimumTime + (parseFloat(updatesVehiclesDetail[j][0].maxTime));
+                        this.vehiclesTime[index + 1] = vehicleTime;
+                        this.findMinimumTime();
+                        updatesVehiclesDetail[j][itemIndex]['time'] = vehicleTime;
+                        this.updatedPackagesDetailsWithTime.push(updatesVehiclesDetail[j]);
                     }
-                    this.vehiclesTime[index] = 2 * (updatesVehiclesDetail[j][0].maxTime);
+                    else {
+                        this.vehiclesTime[index] = 2 * (updatesVehiclesDetail[j][0].maxTime);
+                        this.updatedPackagesDetailsWithTime.push(updatesVehiclesDetail[j]);
+                    }
                     updatesVehiclesDetail.splice(itemIndex, 1);
                     break;
                 }
             }
         }
         packagesMaximumTime.splice(0, 2);
-        var packagesVehicleTime = Object.keys(this.vehiclesTime).map(function (key) { return _this.vehiclesTime[key]; });
-        var minTime = Math.min.apply(Math, packagesVehicleTime);
-        this.minimumTime = minTime;
+        this.findMinimumTime();
         count++;
         if (packagesMaximumTime.length > 0) {
             this.removeItems(vehicleCount, packagesMaximumTime, count, updatesVehiclesDetail);
         }
+    };
+    TimeEstimate.prototype.findMinimumTime = function () {
+        var _this = this;
+        var packagesVehicleTime = Object.keys(this.vehiclesTime).map(function (key) { return _this.vehiclesTime[key]; });
+        var minTime = Math.min.apply(Math, packagesVehicleTime);
+        this.minimumTime = minTime;
     };
     TimeEstimate.prototype.getUpdatedPackagesDetails = function (packagesDetail) {
         // on the basis of weight
@@ -111,6 +123,19 @@ var TimeEstimate = /** @class */ (function () {
         }
         var packagesMaximumTime = this.descendingSort(maximumTimeVehicleTakes);
         this.traverseDelivery(packagesMaximumTime, updatesVehiclesDetail);
+        return this.updatedPackagesDetailsWithTime;
+    };
+    TimeEstimate.prototype.getUpdatedDetails = function (packagesDetail) {
+        var _this = this;
+        var updatedPackagesDetails = this.getUpdatedPackagesDetails(packagesDetail);
+        updatedPackagesDetails.forEach(function (packageItem) {
+            for (var j = 0; j < packageItem.length; j++) {
+                var _a = _this.costEstimate.finalDiscountedCost(+(packageItem[j]['weight']), +(packageItem[j]['distance']), 100, packageItem[j]['packageName']), discount = _a.discount, finalDiscountedCost = _a.finalDiscountedCost;
+                packageItem[j]['discount'] = discount;
+                packageItem[j]['finalDiscountedCost'] = finalDiscountedCost;
+            }
+        });
+        return updatedPackagesDetails;
     };
     return TimeEstimate;
 }());

@@ -43,6 +43,7 @@ tsc CostEstimate/index.ts
 tsc TimeEstimate/TimeEstimate.ts
 node TimeEstimate/TimeEstimate.js
 tsc TimeEstimate/index.ts
+node TimeEstimate/index.js
 ## Tu run unit test
 update package.json file scripts -> jasmine CostEstimate/CostEstimate.spec.js
 update package.json file scripts -> jasmine TimeEstimate/TimeEstimate.spec.js

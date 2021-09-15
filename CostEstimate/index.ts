@@ -1,4 +1,5 @@
 import { CostEstimate } from './CostEstimate';
 
-let obj = new CostEstimate();
-obj.finalDiscountedCost(5, 5, 100, "PKG1");
+let getCost = new CostEstimate();
+
+getCost.finalDiscountedCost(155, 95, 100, "PKG1");

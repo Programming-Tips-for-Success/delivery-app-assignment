@@ -1,9 +1,15 @@
+import { CostEstimate } from '../CostEstimate/CostEstimate';
 
 export class TimeEstimate {
     maxElement;
     packagesDetails = [];
     minimumTime;
     vehiclesTime = {};
+    updatedPackagesDetailsWithTime = [];
+    costEstimate;
+    constructor() {
+        this.costEstimate = new CostEstimate();
+    }
 
     sortPackages(packagesInfo) {
         packagesInfo.sort((a, b) => {
@@ -85,11 +91,21 @@ export class TimeEstimate {
                     itemIndex = j;
                     if (this.minimumTime) {
                         let vehicleTime = 0;
-                        vehicleTime = this.minimumTime + (parseFloat(updatesVehiclesDetail[j][0].maxTime) * 2);
-                        console.log(vehicleTime, this.vehiclesTime, this.minimumTime, 'sase2');
+                        vehicleTime = this.minimumTime + (parseFloat(updatesVehiclesDetail[j][0].maxTime));
+
+                        this.vehiclesTime[index + 1] = vehicleTime;
+
+                        this.findMinimumTime();
+
+                        updatesVehiclesDetail[j][itemIndex]['time'] = vehicleTime;
+                        this.updatedPackagesDetailsWithTime.push(updatesVehiclesDetail[j]);
+
+                    } else {
+                        this.vehiclesTime[index] = 2 * (updatesVehiclesDetail[j][0].maxTime);
+                        this.updatedPackagesDetailsWithTime.push(updatesVehiclesDetail[j]);
                     }
 
-                    this.vehiclesTime[index] = 2 * (updatesVehiclesDetail[j][0].maxTime);
+
                     updatesVehiclesDetail.splice(itemIndex, 1);
                     break;
                 }
@@ -97,14 +113,18 @@ export class TimeEstimate {
         }
         packagesMaximumTime.splice(0, 2);
 
-        var packagesVehicleTime = Object.keys(this.vehiclesTime).map((key) => { return this.vehiclesTime[key]; });
-        let minTime = Math.min(...packagesVehicleTime);
-        this.minimumTime = minTime;
 
+        this.findMinimumTime();
         count++;
         if (packagesMaximumTime.length > 0) {
             this.removeItems(vehicleCount, packagesMaximumTime, count, updatesVehiclesDetail);
         }
+    }
+
+    findMinimumTime() {
+        const packagesVehicleTime = Object.keys(this.vehiclesTime).map((key) => { return this.vehiclesTime[key]; });
+        let minTime = Math.min(...packagesVehicleTime);
+        this.minimumTime = minTime;
     }
 
     getUpdatedPackagesDetails(packagesDetail) {
@@ -130,5 +150,24 @@ export class TimeEstimate {
 
         let packagesMaximumTime = this.descendingSort(maximumTimeVehicleTakes);
         this.traverseDelivery(packagesMaximumTime, updatesVehiclesDetail);
+        return this.updatedPackagesDetailsWithTime;
+    }
+
+    getUpdatedDetails(packagesDetail) {
+        let updatedPackagesDetails = this.getUpdatedPackagesDetails(packagesDetail);
+
+        updatedPackagesDetails.forEach(packageItem => {
+
+            for (let j = 0; j < packageItem.length; j++) {
+                let { discount, finalDiscountedCost } = this.costEstimate.finalDiscountedCost(+(packageItem[j]['weight']),
+                    +(packageItem[j]['distance']), 100, packageItem[j]['packageName']);
+                packageItem[j]['discount'] = discount;
+                packageItem[j]['finalDiscountedCost'] = finalDiscountedCost;
+
+            }
+        });
+
+
+        return updatedPackagesDetails;
     }
 }
